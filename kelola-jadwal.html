@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Jadwal - Sistem P4KM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .sidebar-item:hover, .sidebar-item.active { background-color: #1e40af; }
+        .modal { transition: opacity 0.3s ease; }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-blue-900 text-white flex flex-col min-h-screen">
+            <div class="p-6 text-2xl font-bold border-b border-blue-800">
+                <i class="fas fa-book-reader mr-2"></i> Sistem P4KM
+            </div>
+            <nav class="flex-1 p-4">
+                <a href="#" class="sidebar-item flex items-center p-3 rounded-lg transition-colors">
+                    <i class="fas fa-tachometer-alt w-6"></i><span class="ml-3">Dashboard</span>
+                </a>
+                <a href="#" class="sidebar-item active flex items-center p-3 rounded-lg transition-colors">
+                    <i class="fas fa-calendar-alt w-6"></i><span class="ml-3">Kelola Jadwal</span>
+                </a>
+                <a href="#" class="sidebar-item flex items-center p-3 rounded-lg transition-colors">
+                    <i class="fas fa-check-double w-6"></i><span class="ml-3">Validasi Laporan</span>
+                </a>
+            </nav>
+            <div class="p-4 border-t border-blue-800">
+                <div class="flex items-center mb-4">
+                    <img src="https://placehold.co/40x40/e2e8f0/334155?text=BS" class="rounded-full mr-3">
+                    <div>
+                        <p class="font-semibold">Budi Santoso</p>
+                        <p class="text-sm text-blue-300">Kabid P4KM</p>
+                    </div>
+                </div>
+                <a href="login.html" class="sidebar-item flex items-center p-3 rounded-lg transition-colors">
+                    <i class="fas fa-sign-out-alt w-6"></i><span class="ml-3">Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Konten Utama -->
+        <main class="flex-1 p-8 overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-3xl font-bold text-gray-800">Kelola Jadwal Kunjungan</h1>
+                <button onclick="openModal('form-modal', 'Buat Jadwal Baru')" class="bg-blue-600 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-700 transition-colors flex items-center">
+                    <i class="fas fa-plus mr-2"></i> Buat Jadwal Baru
+                </button>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow overflow-x-auto">
+                 <table class="w-full text-left">
+                    <thead>
+                        <tr class="border-b bg-gray-50">
+                            <th class="p-4 font-semibold">Lokasi Kunjungan</th>
+                            <th class="p-4 font-semibold">Tanggal</th>
+                            <th class="p-4 font-semibold">Petugas Ditugaskan</th>
+                            <th class="p-4 font-semibold">Status</th>
+                            <th class="p-4 font-semibold">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="p-4">SMP Harapan Bangsa</td>
+                            <td class="p-4">10 Juni 2025</td>
+                            <td class="p-4">Ahmad Subarjo</td>
+                            <td class="p-4"><span class="px-3 py-1 text-sm rounded-full bg-blue-100 text-blue-800 font-medium">Terjadwal</span></td>
+                            <td class="p-4">
+                               <button onclick="openModal('detail-modal')" class="text-blue-600 hover:underline">Detail</button>
+                               <button onclick="openModal('form-modal', 'Edit Jadwal Kunjungan')" class="text-yellow-600 hover:underline ml-3">Edit</button>
+                               <button onclick="openModal('delete-modal')" class="text-red-600 hover:underline ml-3">Batalkan</button>
+                           </td>
+                        </tr>
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="p-4">Perpustakaan Harapan Bangsa</td>
+                            <td class="p-4">02 Juni 2025</td>
+                            <td class="p-4">Siti Aminah</td>
+                            <td class="p-4"><span class="px-3 py-1 text-sm rounded-full bg-green-100 text-green-800 font-medium">Selesai</span></td>
+                             <td class="p-4"><button onclick="openModal('detail-modal')" class="text-blue-600 hover:underline">Detail</button></td>
+                        </tr>
+                    </tbody>
+                 </table>
+             </div>
+        </main>
+    </div>
+
+    <!-- Modal untuk Tambah/Edit Jadwal -->
+    <div id="form-modal" class="modal hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl">
+            <div class="p-6 border-b flex justify-between items-center">
+                <h2 class="text-xl font-bold" id="form-modal-title">Buat Jadwal Baru</h2>
+                <button onclick="closeModal('form-modal')" class="text-gray-500 hover:text-gray-800">&times;</button>
+            </div>
+            <div class="p-6">
+                <form>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-1">Tanggal Kunjungan</label>
+                            <input type="date" class="w-full px-3 py-2 border rounded-lg bg-gray-50">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-1">Lokasi Kunjungan</label>
+                            <input type="text" class="w-full px-3 py-2 border rounded-lg bg-gray-50" placeholder="Contoh: SMP Harapan Bangsa">
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-medium mb-1">Staf P4KM Ditugaskan</label>
+                         <select class="w-full px-3 py-2 border rounded-lg bg-gray-50">
+                            <option>Ahmad Subarjo</option>
+                            <option>Siti Aminah</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-medium mb-1">Agenda Kunjungan</label>
+                        <textarea rows="4" class="w-full px-3 py-2 border rounded-lg bg-gray-50" placeholder="Jelaskan agenda atau tujuan kunjungan..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="p-6 bg-gray-50 border-t flex justify-end space-x-3">
+                 <button type="button" onclick="closeModal('form-modal')" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300">Batal</button>
+                <button type="button" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Simpan Jadwal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal untuk Detail Jadwal -->
+    <div id="detail-modal" class="modal hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl">
+            <div class="p-6 border-b flex justify-between items-center">
+                <h2 class="text-xl font-bold">Detail Jadwal Kunjungan</h2>
+                <button onclick="closeModal('detail-modal')" class="text-gray-500 hover:text-gray-800">&times;</button>
+            </div>
+            <div class="p-6 space-y-4">
+                <div><strong class="w-40 inline-block">Lokasi Kunjungan:</strong> SMP Harapan Bangsa</div>
+                <div><strong class="w-40 inline-block">Tanggal:</strong> 10 Juni 2025</div>
+                <div><strong class="w-40 inline-block">Petugas:</strong> Ahmad Subarjo</div>
+                <div><strong class="w-40 inline-block">Status:</strong> <span class="px-3 py-1 text-sm rounded-full bg-blue-100 text-blue-800 font-medium">Terjadwal</span></div>
+                <div><strong class="w-40 inline-block align-top">Agenda:</strong> <span class="inline-block">Pembinaan rutin mengenai manajemen perpustakaan digital.</span></div>
+            </div>
+            <div class="p-6 bg-gray-50 border-t flex justify-end">
+                 <button type="button" onclick="closeModal('detail-modal')" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal untuk Konfirmasi Hapus/Batalkan -->
+    <div id="delete-modal" class="modal hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md">
+            <div class="p-6 text-center">
+                <i class="fas fa-exclamation-triangle text-5xl text-red-500 mb-4"></i>
+                <h2 class="text-xl font-bold mb-2">Konfirmasi Pembatalan</h2>
+                <p class="text-gray-600">Apakah Anda yakin ingin membatalkan jadwal kunjungan ini?</p>
+            </div>
+            <div class="p-6 bg-gray-50 flex justify-center space-x-4">
+                 <button type="button" onclick="closeModal('delete-modal')" class="px-6 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300">Tidak</button>
+                <button type="button" class="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Ya, Batalkan</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+    function openModal(modalId, title) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            if (modalId === 'form-modal' && title) {
+                document.getElementById('form-modal-title').innerText = title;
+            }
+            modal.classList.remove('hidden');
+        }
+    }
+
+    function closeModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.add('hidden');
+        }
+    }
+</script>
+</body>
+</html>

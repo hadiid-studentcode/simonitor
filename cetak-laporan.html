@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cetak Laporan - Sistem P4KM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .sidebar-item:hover, .sidebar-item.active { background-color: #1e40af; }
+        @media print {
+            .no-print { display: none; }
+            main { padding: 0; }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-blue-900 text-white flex-col min-h-screen no-print">
+            <div class="p-6 text-2xl font-bold border-b border-blue-800">
+                <i class="fas fa-book-reader mr-2"></i> Sistem P4KM
+            </div>
+            <nav class="flex-1 p-4">
+                <a href="#" class="sidebar-item flex items-center p-3 rounded-lg transition-colors">
+                    <i class="fas fa-tachometer-alt w-6"></i><span class="ml-3">Dashboard</span>
+                </a>
+                <a href="#" class="sidebar-item active flex items-center p-3 rounded-lg transition-colors">
+                    <i class="fas fa-print w-6"></i><span class="ml-3">Cetak Laporan</span>
+                </a>
+            </nav>
+            <div class="p-4 border-t border-blue-800">
+                <div class="flex items-center mb-4">
+                    <img src="https://placehold.co/40x40/e2e8f0/334155?text=IP" class="rounded-full mr-3">
+                    <div>
+                        <p class="font-semibold">Dr. Indah Permata</p>
+                        <p class="text-sm text-blue-300">Kepala Dinas</p>
+                    </div>
+                </div>
+                <a href="login.html" class="sidebar-item flex items-center p-3 rounded-lg transition-colors">
+                    <i class="fas fa-sign-out-alt w-6"></i><span class="ml-3">Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Konten Utama -->
+        <main class="flex-1 p-8 overflow-y-auto">
+            <div class="flex justify-between items-center mb-6 no-print">
+                <h1 class="text-3xl font-bold text-gray-800">Cetak Laporan Rekapitulasi</h1>
+                <button onclick="window.print()" class="bg-green-600 text-white px-5 py-2 rounded-lg shadow hover:bg-green-700 transition-colors flex items-center">
+                    <i class="fas fa-print mr-2"></i> Cetak Halaman Ini
+                </button>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow overflow-x-auto">
+                <div class="flex items-center mb-6 space-x-4 no-print">
+                    <div>
+                        <label class="text-sm font-medium">Dari Tanggal:</label>
+                        <input type="date" class="border rounded-lg p-2" value="2025-05-01">
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium">Sampai Tanggal:</label>
+                        <input type="date" class="border rounded-lg p-2" value="2025-05-31">
+                    </div>
+                    <button class="bg-blue-600 text-white px-4 py-2 mt-5 rounded-lg">Filter</button>
+                </div>
+                <h2 class="text-xl font-bold text-center mb-2">Laporan Rekapitulasi Pembinaan</h2>
+                <p class="text-center text-gray-500 mb-6">Periode: 01 Mei 2025 - 31 Mei 2025</p>
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="border-b-2 border-gray-300 bg-gray-50">
+                            <th class="p-4 font-semibold">No</th>
+                            <th class="p-4 font-semibold">Tanggal</th>
+                            <th class="p-4 font-semibold">Lokasi Kunjungan</th>
+                            <th class="p-4 font-semibold">Petugas P4KM</th>
+                            <th class="p-4 font-semibold">Status</th>
+                        </tr>
+                    </thead>
+                     <tbody>
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="p-4">1</td>
+                            <td class="p-4">28 Mei 2025</td>
+                            <td class="p-4">Desa Makmur Jaya</td>
+                            <td class="p-4">Ahmad Subarjo</td>
+                            <td class="p-4"><span class="font-medium text-green-700">Disetujui</span></td>
+                        </tr>
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="p-4">2</td>
+                            <td class="p-4">25 Mei 2025</td>
+                            <td class="p-4">SMP Tunas Muda</td>
+                            <td class="p-4">Ahmad Subarjo</td>
+                            <td class="p-4"><span class="font-medium text-green-700">Disetujui</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
